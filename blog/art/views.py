@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template
 from werkzeug.exceptions import NotFound
 
-from user.views import get_user_name
+from blog.user.views import get_user_name
 
 article = Blueprint("article", __name__, url_prefix="/article", static_folder="../static")
 

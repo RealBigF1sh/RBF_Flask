@@ -1,7 +1,23 @@
 from flask import Flask
 
-app = Flask(__name__)
+from blog.art.views import article
+from blog.user.views import user
+from blog.index.views import index
 
-@app.route("/<name_1>/<name_2>")
-def index(name_1:str, name_2:str):
-    return f'Hello, {name_1+name_2}'
+
+VIEWS = [
+    index,
+    user,
+    article,
+    ]
+
+
+def create_app() -> Flask:
+    app = Flask(__name__)
+    register_blueprints(app)
+    return app
+
+
+def register_blueprints(app: Flask):
+    for view in VIEWS:
+        app.register_blueprint(view)
