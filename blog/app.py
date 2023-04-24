@@ -3,11 +3,12 @@ from json import loads
 from os import getenv, path
 from blog import commands
 from blog.models import User
-from blog.extensions import db, login_manager
+from blog.extensions import db, login_manager, migrate
 from blog.art.views import article
 from blog.user.views import user
 from blog.index.views import index
 from blog.auth.views import auth
+
 
 CONFIG_PATH = getenv("CONFIG_PATH", path.join("..\config.json"))
 
@@ -29,6 +30,7 @@ def create_app() -> Flask:
 
 def register_extensions(app):
     db.init_app(app)
+    migrate.init_app(app, db, compare_type=True)
     
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'
