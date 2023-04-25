@@ -1,34 +1,29 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import logout_user, login_user, login_required, current_user
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 from blog.models import User
+from blog.forms.login_form import LoginForm
+from blog.extensions import db
 
 auth = Blueprint('auth', __name__, static_folder='../static')
 
 
-@auth.route('/login', methods=('GET',))
+@auth.route('/login', methods=('GET', 'POST'))
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('user.profile', pk=current_user.id))
-
-    return render_template(
-        'auth/login.html',
-    )
-
-
-@auth.route('/login', methods=('POST',))
-def login_post():
-    email = request.form.get('email')
-    password = request.form.get('password')
-
-    user = User.query.filter_by(email=email).first()
-
-    if not user or not check_password_hash(user.password, password):
-        flash('Check your login details')
+    
+    form = LoginForm(request.form)
+    
+    if request.method == "POST" and form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).one_or_none()
+        if user is None:
+            return render_template("auth/login.html", form=form, error="user doesn't exist")
+        if User.query.filter_by(password=form.password.data).count():
+            return render_template("auth/login.html", form=form, error="invalid email or password")
+        login_user(user)
         return redirect(url_for('.login'))
-
-    login_user(user)
-    return redirect(url_for('user.profile', pk=user.id))
+    return render_template("auth/login.html", form=form)
 
 
 @auth.route('/logout')
