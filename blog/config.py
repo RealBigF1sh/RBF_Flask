@@ -11,13 +11,14 @@ DEBUG = ENV == EnvType.development
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 
-SQLALCHEMY_DATABASE_URI = "sqlite:////tmp/blog.db"
+SQLALCHEMY_DATABASE_URI = "sqlite:///db.sqlite"
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+WTF_CSRF_ENABLE = True
 class BaseConfig(object):
     DEBUG = False
     TESTING = False
-    SQLALCHEMY_DATABASE_URI = "sqlite:////tmp/blog.db"
+    SQLALCHEMY_DATABASE_URI = "sqlite:///db.sqlite"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = "abcdefg123456"
 
