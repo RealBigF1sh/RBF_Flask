@@ -14,6 +14,8 @@ class User(db.Model, UserMixin):
     last_name = db.Column(db.String(255))
     password = db.Column(db.String(255))
 
+    author = relationship('Author', uselist=False, back_populates='user')
+
     def __init__(self, email, password, first_name, last_name):
         self.email = email
         self.password = password
