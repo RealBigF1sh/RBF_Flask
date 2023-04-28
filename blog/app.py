@@ -8,6 +8,7 @@ from blog.art.views import article
 from blog.user.views import user
 from blog.index.views import index
 from blog.auth.views import auth
+from blog.author.views import author
 
 
 CONFIG_PATH = getenv("CONFIG_PATH", path.join("..\config.json"))
@@ -17,6 +18,7 @@ VIEWS = [
     user,
     article,
     auth,
+    author,
     ]
 
 
