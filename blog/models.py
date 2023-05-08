@@ -19,14 +19,16 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(255))
     last_name = db.Column(db.String(255))
     password = db.Column(db.String(255))
+    is_staff = db.Column(db.Boolean, default=False)
 
     author = relationship('Author', uselist=False, back_populates='user')
 
-    def __init__(self, email, password, first_name, last_name):
+    def __init__(self, email, password, first_name, last_name, is_staff):
         self.email = email
         self.password = password
         self.first_name = first_name
         self.last_name = last_name
+        self.is_staff = is_staff
 
 class Author(db.Model):
     __tablename__ = 'authors'

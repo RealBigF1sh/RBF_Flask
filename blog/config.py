@@ -15,6 +15,8 @@ SQLALCHEMY_DATABASE_URI = "sqlite:///db.sqlite"
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 WTF_CSRF_ENABLE = True
+
+FLASK_ADMIN_SWATCH = 'pulse'
 class BaseConfig(object):
     DEBUG = False
     TESTING = False
