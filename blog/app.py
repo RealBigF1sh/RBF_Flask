@@ -1,6 +1,7 @@
 from flask import Flask
 from combojsonapi.spec import ApiSpecPlugin
 from combojsonapi.event import EventPlugin
+from combojsonapi.permission import PermissionPlugin
 from json import loads
 from os import getenv, path
 from blog import commands, admin
@@ -42,6 +43,7 @@ def register_extensions(app):
     ad.init_app(app)
     api.plugins = [
         EventPlugin(),
+        PermissionPlugin(),
         ApiSpecPlugin(
             app=app,
             tags={
