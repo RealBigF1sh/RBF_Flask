@@ -2,8 +2,8 @@ from flask import Blueprint, render_template, redirect, request, url_for
 from flask_login import login_required, current_user
 from sqlalchemy.orm import joinedload
 from werkzeug.exceptions import NotFound
-
-
+from typing import Dict
+import requests
 from blog.extensions import db
 from blog.forms.article import CreateArticleForm
 from blog.models import Article, Author, Tag
@@ -13,9 +13,11 @@ article = Blueprint("article", __name__, url_prefix="/article", static_folder=".
 @article.route('/', methods=['GET'])
 def article_list():
     articles: Article = Article.query.all()
+    count_articles: Dict = requests.get('http://127.0.0.1:5000/api/articles/event_get_count/').json()
     return render_template(
         'articles/list.html',
         articles=articles,
+        count_articles=count_articles['count'],
     )
 
 

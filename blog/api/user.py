@@ -1,5 +1,5 @@
 from flask_combo_jsonapi import ResourceList, ResourceDetail
-from api.permissions.user import UserListPermission, UserPatchPermission
+from blog.api.permissions.user import UserListPermission, UserPatchPermission
 from blog.extensions import db
 from blog.models import User
 from blog.schemas import UserSchema
