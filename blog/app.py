@@ -1,5 +1,6 @@
 from flask import Flask
 from combojsonapi.spec import ApiSpecPlugin
+from combojsonapi.event import EventPlugin
 from json import loads
 from os import getenv, path
 from blog import commands, admin
@@ -39,6 +40,7 @@ def register_extensions(app):
     csrf.init_app(app)
     ad.init_app(app)
     api.plugins = [
+        EventPlugin(),
         ApiSpecPlugin(
             app=app,
             tags={
