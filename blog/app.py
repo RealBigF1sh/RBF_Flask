@@ -1,5 +1,7 @@
 from flask import Flask
 from combojsonapi.spec import ApiSpecPlugin
+from combojsonapi.event import EventPlugin
+from combojsonapi.permission import PermissionPlugin
 from json import loads
 from os import getenv, path
 from blog import commands, admin
@@ -11,6 +13,7 @@ from blog.user.views import user
 from blog.index.views import index
 from blog.auth.views import auth
 from blog.author.views import author
+
 
 
 CONFIG_PATH = getenv("CONFIG_PATH", path.join("..\config.json"))
@@ -39,6 +42,8 @@ def register_extensions(app):
     csrf.init_app(app)
     ad.init_app(app)
     api.plugins = [
+        EventPlugin(),
+        PermissionPlugin(),
         ApiSpecPlugin(
             app=app,
             tags={
